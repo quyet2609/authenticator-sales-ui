@@ -1,0 +1,11 @@
+# Thư mục cài đặt thư viện
+node_modules/
+
+# Thư mục build
+dist/
+
+# File cấu hình môi trường
+.env
+
+# Cache của Vite
+.vite/
