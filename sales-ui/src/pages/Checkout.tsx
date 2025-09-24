@@ -1,8 +1,12 @@
 import { FormEvent, useState } from 'react'
-import { useCart } from '../state/CartContext'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../store'
+import { clear } from '../store/cartSlice'
 
 export default function Checkout() {
-  const { items, total, clear } = useCart()
+  const dispatch = useDispatch()
+  const items = useSelector((s: RootState) => s.cart.items)
+  const total = items.reduce((sum, it) => sum + it.price * it.quantity, 0)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [address, setAddress] = useState('')
@@ -12,7 +16,7 @@ export default function Checkout() {
     e.preventDefault()
     if (!name || !email || !address) return
     setSubmitted(true)
-    clear()
+    dispatch(clear())
   }
 
   if (submitted) {
@@ -46,6 +50,7 @@ export default function Checkout() {
     </div>
   )
 }
+
 
 
 

@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom'
-import { useCart } from '../state/CartContext'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../store'
+import { removeItem, clear } from '../store/cartSlice'
 
 export default function Cart() {
-  const { items, removeItem, clear, total } = useCart()
+  const dispatch = useDispatch()
+  const items = useSelector((s: RootState) => s.cart.items)
+  const total = items.reduce((sum, it) => sum + it.price * it.quantity, 0)
   if (items.length === 0) {
     return (
       <div className="empty">
@@ -19,7 +23,7 @@ export default function Cart() {
           <div className="flex1">
             <div className="row space">
               <strong>{it.name}</strong>
-              <button className="link" onClick={() => removeItem(it.id)}>Xóa</button>
+              <button className="link" onClick={() => dispatch(removeItem(it.id))}>Xóa</button>
             </div>
             <div className="muted">{it.description}</div>
           </div>
@@ -33,12 +37,13 @@ export default function Cart() {
         <strong>{total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</strong>
       </div>
       <div className="row space">
-        <button className="link" onClick={clear}>Xóa giỏ</button>
+        <button className="link" onClick={() => dispatch(clear())}>Xóa giỏ</button>
         <Link className="button" to="/checkout">Thanh toán</Link>
       </div>
     </div>
   )
 }
+
 
 
 

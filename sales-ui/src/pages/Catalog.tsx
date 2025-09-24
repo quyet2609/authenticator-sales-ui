@@ -1,8 +1,9 @@
-import { useCart } from '../state/CartContext'
+import { useDispatch } from 'react-redux'
 import { products } from '../state/products'
+import { addItem } from '../store/cartSlice'
 
 export default function Catalog() {
-  const { addItem } = useCart()
+  const dispatch = useDispatch()
   return (
     <div className="grid">
       {products.map((p) => (
@@ -13,7 +14,7 @@ export default function Catalog() {
             <p className="muted">{p.description}</p>
             <div className="row">
               <span className="price">{p.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
-              <button onClick={() => addItem(p)}>Thêm</button>
+              <button onClick={() => dispatch(addItem(p))}>Thêm</button>
             </div>
           </div>
         </div>
@@ -21,6 +22,7 @@ export default function Catalog() {
     </div>
   )
 }
+
 
 
 

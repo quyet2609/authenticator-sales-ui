@@ -1,9 +1,10 @@
 import { Link, Outlet } from 'react-router-dom'
-import { CartProvider } from '../state/CartContext'
+import { Provider } from 'react-redux'
+import { store } from '../store'
 
 export default function App() {
   return (
-    <CartProvider>
+    <Provider store={store}>
       <div className="container">
         <header className="header">
           <h1>Shop</h1>
@@ -18,9 +19,10 @@ export default function App() {
         </main>
         <footer className="footer">© {new Date().getFullYear()} Sales UI</footer>
       </div>
-    </CartProvider>
+    </Provider>
   )
 }
+
 
 
 
